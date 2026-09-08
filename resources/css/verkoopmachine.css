@@ -1,0 +1,115 @@
+:where([data-verkoopmachine]) {
+    --vm-accent: #166534;
+    --vm-border: #d1d5db;
+    --vm-muted: #4b5563;
+    --vm-surface: #ffffff;
+    --vm-radius: 0.75rem;
+    --vm-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+    color: inherit;
+}
+
+:where([data-verkoopmachine]) .vm-group {
+    margin-block: 2.5rem;
+}
+
+:where([data-verkoopmachine]) .vm-group__heading {
+    align-items: baseline;
+    display: flex;
+    gap: 1rem;
+    justify-content: space-between;
+    margin-bottom: 1rem;
+}
+
+:where([data-verkoopmachine]) .vm-group__heading h2,
+:where([data-verkoopmachine]) .vm-card h3 {
+    color: inherit;
+    margin: 0;
+}
+
+:where([data-verkoopmachine]) .vm-group__heading span {
+    color: var(--vm-muted);
+    font-size: 0.875rem;
+}
+
+:where([data-verkoopmachine]) .vm-grid {
+    display: grid;
+    gap: 1rem;
+    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+}
+
+:where([data-verkoopmachine]) .vm-card {
+    background: var(--vm-surface);
+    border: 1px solid var(--vm-border);
+    border-radius: var(--vm-radius);
+    box-shadow: var(--vm-shadow);
+    color: inherit;
+    display: block;
+    overflow: hidden;
+    text-decoration: none;
+    transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
+}
+
+:where([data-verkoopmachine]) .vm-card:hover {
+    border-color: var(--vm-accent);
+    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
+    transform: translateY(-2px);
+}
+
+:where([data-verkoopmachine]) .vm-card:focus-visible {
+    outline: 3px solid var(--vm-accent);
+    outline-offset: 3px;
+}
+
+:where([data-verkoopmachine]) .vm-card__image {
+    aspect-ratio: 16 / 10;
+    display: block;
+    object-fit: cover;
+    width: 100%;
+}
+
+:where([data-verkoopmachine]) .vm-card__body {
+    padding: 1rem;
+}
+
+:where([data-verkoopmachine]) .vm-card__body > p {
+    color: var(--vm-muted);
+    line-height: 1.5;
+    margin: 0.5rem 0 1rem;
+}
+
+:where([data-verkoopmachine]) .vm-card__facts {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 0.5rem 1rem;
+    margin: 0;
+}
+
+:where([data-verkoopmachine]) .vm-card__facts div {
+    display: flex;
+    gap: 0.25rem;
+}
+
+:where([data-verkoopmachine]) .vm-card__facts dt {
+    color: var(--vm-muted);
+}
+
+:where([data-verkoopmachine]) .vm-card__facts dt::after {
+    content: ':';
+}
+
+:where([data-verkoopmachine]) .vm-card__facts dd {
+    font-weight: 600;
+    margin: 0;
+}
+
+:where([data-verkoopmachine]) .vm-message {
+    border: 1px solid var(--vm-border);
+    border-radius: var(--vm-radius);
+    margin: 1rem 0;
+    padding: 1rem;
+}
+
+:where([data-verkoopmachine]) .vm-message--error {
+    border-color: #dc2626;
+    color: #991b1b;
+}

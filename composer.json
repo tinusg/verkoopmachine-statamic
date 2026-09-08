@@ -1,0 +1,35 @@
+{
+    "name": "tinusg/verkoopmachine-statamic",
+    "description": "Display Verkoopmachine content in Statamic websites.",
+    "type": "statamic-addon",
+    "require": {
+        "php": "^8.3",
+        "statamic/cms": "^6.0"
+    },
+    "require-dev": {
+        "orchestra/testbench": "^10.8"
+    },
+    "autoload": {
+        "psr-4": {
+            "Tinusg\\VerkoopmachineStatamic\\": "src/"
+        }
+    },
+    "autoload-dev": {
+        "psr-4": {
+            "Tinusg\\VerkoopmachineStatamic\\Tests\\": "tests/"
+        }
+    },
+    "extra": {
+        "statamic": {
+            "name": "Verkoopmachine",
+            "description": "Display Verkoopmachine content in Statamic websites."
+        },
+        "laravel": {
+            "providers": [
+                "Tinusg\\VerkoopmachineStatamic\\ServiceProvider"
+            ]
+        }
+    },
+    "minimum-stability": "stable",
+    "prefer-stable": true
+}
