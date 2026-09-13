@@ -1,15 +1,15 @@
 :where([data-verkoopmachine]) {
-    --vm-accent: #166534;
-    --vm-border: #d1d5db;
-    --vm-muted: #4b5563;
+    --vm-brand: #e8a484;
+    --vm-card-accent: #7c3aed;
+    --vm-border: rgb(0 0 0 / 0.08);
+    --vm-muted: #737373;
     --vm-surface: #ffffff;
-    --vm-radius: 0.75rem;
-    --vm-shadow: 0 1px 3px rgb(0 0 0 / 0.08);
+    --vm-text: #1a1a1a;
     color: inherit;
 }
 
 :where([data-verkoopmachine]) .vm-group {
-    margin-block: 2.5rem;
+    margin-block: 2.25rem;
 }
 
 :where([data-verkoopmachine]) .vm-group__heading {
@@ -26,90 +26,293 @@
     margin: 0;
 }
 
-:where([data-verkoopmachine]) .vm-group__heading span {
-    color: var(--vm-muted);
-    font-size: 0.875rem;
+:where([data-verkoopmachine]) .vm-group__heading h2 {
+    font-size: clamp(1.15rem, 2vw, 1.4rem);
+    letter-spacing: -0.02em;
+    line-height: 1.25;
 }
 
-:where([data-verkoopmachine]) .vm-grid {
+:where([data-verkoopmachine]) .vm-group__heading > span {
+    color: var(--vm-muted);
+    flex: none;
+    font-size: 0.8rem;
+}
+
+:where([data-verkoopmachine]) .vm-grid--vee,
+:where([data-verkoopmachine]) .vm-grid--default {
     display: grid;
-    gap: 1rem;
-    grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+    gap: 1.5rem;
+    grid-template-columns: repeat(auto-fill, minmax(min(100%, 17rem), 1fr));
 }
 
 :where([data-verkoopmachine]) .vm-card {
-    background: var(--vm-surface);
-    border: 1px solid var(--vm-border);
-    border-radius: var(--vm-radius);
-    box-shadow: var(--vm-shadow);
-    color: inherit;
-    display: block;
-    overflow: hidden;
+    color: var(--vm-text);
     text-decoration: none;
-    transition: border-color 150ms ease, box-shadow 150ms ease, transform 150ms ease;
-}
-
-:where([data-verkoopmachine]) .vm-card:hover {
-    border-color: var(--vm-accent);
-    box-shadow: 0 4px 12px rgb(0 0 0 / 0.1);
-    transform: translateY(-2px);
 }
 
 :where([data-verkoopmachine]) .vm-card:focus-visible {
-    outline: 3px solid var(--vm-accent);
+    outline: 3px solid var(--vm-brand);
     outline-offset: 3px;
 }
 
+:where([data-verkoopmachine]) .vm-card--vee,
+:where([data-verkoopmachine]) .vm-card--default {
+    background: var(--vm-surface);
+    border: 1px solid var(--vm-border);
+    border-radius: 0.5rem;
+    display: flex;
+    flex-direction: column;
+    min-width: 0;
+    overflow: hidden;
+    transition: box-shadow 180ms ease, transform 180ms ease;
+}
+
+:where([data-verkoopmachine]) .vm-card--vee:hover,
+:where([data-verkoopmachine]) .vm-card--default:hover {
+    box-shadow: 0 0.25rem 0.75rem rgb(0 0 0 / 0.1);
+    transform: translateY(-0.125rem);
+}
+
+:where([data-verkoopmachine]) .vm-card__media {
+    aspect-ratio: 4 / 3;
+    background:
+        radial-gradient(70% 110% at 38% 58%, rgb(224 200 188 / 0.3) 0%, rgb(224 200 188 / 0.14) 42%, transparent 72%),
+        radial-gradient(52% 95% at 91% 22%, rgb(224 200 188 / 0.24) 0%, transparent 76%),
+        linear-gradient(105deg, #fff 0%, rgb(224 200 188 / 0.18) 100%);
+    overflow: hidden;
+    position: relative;
+}
+
 :where([data-verkoopmachine]) .vm-card__image {
-    aspect-ratio: 16 / 10;
     display: block;
-    object-fit: cover;
+    height: 100%;
     width: 100%;
 }
 
+:where([data-verkoopmachine]) .vm-card__image--placeholder {
+    object-fit: contain;
+}
+
+:where([data-verkoopmachine]) .vm-card__image--blurred {
+    filter: blur(0.75rem);
+    transform: scale(1.04);
+}
+
+:where([data-verkoopmachine]) .vm-card__overlay {
+    inset: 0;
+    height: 100%;
+    object-fit: contain;
+    pointer-events: none;
+    position: absolute;
+    width: 100%;
+}
+
+:where([data-verkoopmachine]) .vm-card--default > .vm-card__image {
+    aspect-ratio: 4 / 3;
+    object-fit: cover;
+}
+
+:where([data-verkoopmachine]) .vm-card__badge {
+    border-radius: 999px;
+    color: #fff;
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1rem;
+    padding: 0.25rem 0.625rem;
+    position: absolute;
+    top: 0.5rem;
+    z-index: 1;
+}
+
+:where([data-verkoopmachine]) .vm-card__badge--wanted {
+    background: #f59e0b;
+    left: 0.5rem;
+    text-transform: uppercase;
+}
+
+:where([data-verkoopmachine]) .vm-card__badge--quantity {
+    background: rgb(17 24 39 / 0.82);
+    right: 0.5rem;
+}
+
+:where([data-verkoopmachine]) .vm-card__badge--photos {
+    align-items: center;
+    background: rgb(17 24 39 / 0.82);
+    bottom: 0.5rem;
+    display: inline-flex;
+    gap: 0.25rem;
+    left: 0.5rem;
+    top: auto;
+}
+
+:where([data-verkoopmachine]) .vm-card__badge--photos svg {
+    height: 0.875rem;
+    width: 0.875rem;
+}
+
 :where([data-verkoopmachine]) .vm-card__body {
+    display: flex;
+    flex: 1;
+    flex-direction: column;
+    gap: 0.25rem;
     padding: 1rem;
 }
 
-:where([data-verkoopmachine]) .vm-card__body > p {
-    color: var(--vm-muted);
-    line-height: 1.5;
-    margin: 0.5rem 0 1rem;
+:where([data-verkoopmachine]) .vm-card__seller {
+    align-items: center;
+    align-self: flex-start;
+    background: var(--vm-card-accent);
+    border-radius: 999px;
+    color: #fff;
+    display: inline-flex;
+    font-size: 0.75rem;
+    font-weight: 650;
+    line-height: 1rem;
+    margin-bottom: 0.25rem;
+    max-width: 100%;
+    overflow: hidden;
+    padding: 0.125rem 0.625rem;
+    text-overflow: ellipsis;
+    white-space: nowrap;
 }
 
-:where([data-verkoopmachine]) .vm-card__facts {
-    display: flex;
-    flex-wrap: wrap;
-    gap: 0.5rem 1rem;
+:where([data-verkoopmachine]) .vm-card h3 {
+    font-size: 1rem;
+    font-weight: 650;
+    letter-spacing: -0.01em;
+    line-height: 1.5;
+}
+
+:where([data-verkoopmachine]) .vm-card__meta {
+    color: var(--vm-muted);
+    font-size: 0.875rem;
+    line-height: 1.25rem;
     margin: 0;
 }
 
-:where([data-verkoopmachine]) .vm-card__facts div {
+:where([data-verkoopmachine]) .vm-card__price {
+    color: var(--vm-text);
+    font-size: 1rem;
+    font-weight: 650;
+    line-height: 1.5rem;
+    margin: auto 0 0;
+    padding-top: 0.5rem;
+}
+
+:where([data-verkoopmachine]) .vm-grid--rundveeveilingen {
+    background: var(--vm-surface);
+    border: 1px solid var(--vm-border);
+    border-radius: 0.5rem;
+    overflow: hidden;
+}
+
+:where([data-verkoopmachine]) .vm-card--auction {
+    align-items: center;
     display: flex;
+    gap: 1rem;
+    padding: 0.75rem;
+    transition: background-color 180ms ease;
+}
+
+:where([data-verkoopmachine]) .vm-card--auction + .vm-card--auction {
+    border-top: 1px solid var(--vm-border);
+}
+
+:where([data-verkoopmachine]) .vm-card--auction:hover {
+    background: #fafafa;
+}
+
+:where([data-verkoopmachine]) .vm-auction__dates {
+    display: flex;
+    flex: none;
     gap: 0.25rem;
 }
 
-:where([data-verkoopmachine]) .vm-card__facts dt {
+:where([data-verkoopmachine]) .vm-auction__date {
+    background: var(--vm-brand);
+    color: #111827;
+    display: block;
+    font-size: 1.25rem;
+    font-weight: 900;
+    line-height: 1;
+    min-width: 2.75rem;
+    padding: 0.5rem;
+    text-align: center;
+}
+
+:where([data-verkoopmachine]) .vm-auction__date small {
+    display: block;
+    font-size: 0.75rem;
+    font-weight: 400;
+    line-height: 1rem;
+    margin-top: 0.25rem;
+}
+
+:where([data-verkoopmachine]) .vm-auction__content {
+    align-items: center;
+    display: flex;
+    flex: 1;
+    gap: 1rem;
+    justify-content: space-between;
+    min-width: 0;
+}
+
+:where([data-verkoopmachine]) .vm-auction__location {
+    align-items: center;
+    color: #616161;
+    display: flex;
+    flex: none;
+    font-size: 0.875rem;
+    gap: 0.375rem;
+    line-height: 1.25rem;
+}
+
+:where([data-verkoopmachine]) .vm-auction__location svg {
     color: var(--vm-muted);
-}
-
-:where([data-verkoopmachine]) .vm-card__facts dt::after {
-    content: ':';
-}
-
-:where([data-verkoopmachine]) .vm-card__facts dd {
-    font-weight: 600;
-    margin: 0;
+    flex: none;
+    height: 1rem;
+    width: 1rem;
 }
 
 :where([data-verkoopmachine]) .vm-message {
+    background: #fafafa;
     border: 1px solid var(--vm-border);
-    border-radius: var(--vm-radius);
+    border-radius: 0.5rem;
     margin: 1rem 0;
     padding: 1rem;
 }
 
 :where([data-verkoopmachine]) .vm-message--error {
+    background: #fef2f2;
     border-color: #dc2626;
     color: #991b1b;
+}
+
+@media (max-width: 40rem) {
+    :where([data-verkoopmachine]) .vm-group__heading {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    :where([data-verkoopmachine]) .vm-card--auction {
+        align-items: flex-start;
+        gap: 0.75rem;
+    }
+
+    :where([data-verkoopmachine]) .vm-auction__content {
+        align-items: flex-start;
+        flex-direction: column;
+        gap: 0.25rem;
+    }
+
+    :where([data-verkoopmachine]) .vm-auction__location {
+        flex: initial;
+    }
+}
+
+@media (prefers-reduced-motion: reduce) {
+    :where([data-verkoopmachine]) .vm-card {
+        transition: none;
+    }
 }

@@ -1,8 +1,9 @@
 # Verkoopmachine voor Statamic
 
-Toon actueel aanbod uit Verkoopmachine in een Statamic-site. De add-on haalt de
-inhoud op aan de hand van één ingestelde **clientslug** en rendert die als een
-toegankelijk, gegroepeerd overzicht met deeplinks naar Koemarkt.
+Toon actueel aanbod uit [Verkoopmachine](https://www.verkoopmachine.nl) in een
+Statamic-site. De add-on haalt de inhoud op aan de hand van één ingestelde
+**clientslug** en rendert die als een toegankelijk, gegroepeerd overzicht met
+deeplinks naar [Koemarkt](https://www.koemarkt.nl).
 
 De eerste versie ondersteunt:
 
@@ -24,8 +25,7 @@ Voor productie gebruikt de add-on standaard
 
 ## Installatie
 
-Installeer de package in de Statamic-site zodra deze via Packagist of een
-private Composer-repository beschikbaar is:
+Installeer de package via Packagist:
 
 ```bash
 composer require tinusg/verkoopmachine-statamic
@@ -147,6 +147,16 @@ groep en ligt altijd tussen 1 en 24.
 {{ verkoopmachine:overview types="vee|rundveeveilingen" limit="12" }}
 ```
 
+Voor losse overzichtspagina's gebruik je per Statamic-template één type:
+
+```antlers
+{{# Pagina /vee #}}
+{{ verkoopmachine:overview types="vee" limit="24" }}
+
+{{# Pagina /rundveeveilingen #}}
+{{ verkoopmachine:overview types="rundveeveilingen" limit="24" }}
+```
+
 Beschikbare typen in deze versie:
 
 | Type | Inhoud | Deeplink |
@@ -178,12 +188,12 @@ Pas de uitstraling bij voorkeur aan via de variabelen op de wrapper:
 
 ```css
 [data-verkoopmachine] {
-    --vm-accent: #0f766e;
+    --vm-brand: #f0a17d;
+    --vm-card-accent: #0f766e;
     --vm-border: #99f6e4;
     --vm-muted: #475569;
     --vm-surface: #f8fafc;
-    --vm-radius: 1rem;
-    --vm-shadow: 0 10px 25px rgb(15 23 42 / 0.1);
+    --vm-text: #172033;
 }
 ```
 
@@ -193,17 +203,16 @@ Omdat de basisselectors met `:where()` een lage specificiteit hebben, zijn
 gerichte overrides overzichtelijk:
 
 ```css
-[data-verkoopmachine] .vm-grid {
+[data-verkoopmachine] .vm-grid--vee {
     grid-template-columns: repeat(3, minmax(0, 1fr));
 }
 
-[data-verkoopmachine] .vm-card {
+[data-verkoopmachine] .vm-card--vee {
     border-radius: 0;
 }
 
-[data-verkoopmachine] .vm-group__heading {
-    border-bottom: 2px solid var(--vm-accent);
-    padding-bottom: 0.5rem;
+[data-verkoopmachine] .vm-auction__date {
+    border-radius: 0.25rem;
 }
 ```
 
@@ -222,9 +231,17 @@ rechtstreeks aan: een volgende `vendor:publish --force` overschrijft die.
 | `.vm-grid--vee` | Grid voor Vee-advertenties |
 | `.vm-grid--rundveeveilingen` | Grid voor Rundveeveilingen |
 | `.vm-card` | Klikbare kaart/deeplink |
-| `.vm-card__image` | Hoofdfoto van een advertentie |
+| `.vm-card--vee` | Beeldkaart voor een Vee-advertentie |
+| `.vm-card--auction` | Horizontale regel voor een Rundveeveiling |
+| `.vm-card__media` | Beeldvlak en badges van een Vee-advertentie |
+| `.vm-card__image` | Afbeelding van een advertentie |
+| `.vm-card__image--placeholder` | Koemarkt-rasplaceholder van een Vee-advertentie |
+| `.vm-card__overlay` | Extra placeholder-overlay voor embryo en sperma |
+| `.vm-card__badge--photos` | Indicator met het aantal beschikbare foto's |
 | `.vm-card__body` | Tekstgedeelte van een kaart |
-| `.vm-card__facts` | Lijst met kenmerken |
+| `.vm-card__seller` | Badge met de naam van de aanbieder |
+| `.vm-auction__date` | Datumblok van een Rundveeveiling |
+| `.vm-auction__location` | Locatie van een Rundveeveiling |
 | `.vm-message` | Lege status of foutmelding |
 | `.vm-message--error` | Foutmelding |
 

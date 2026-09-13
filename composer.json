@@ -1,7 +1,28 @@
 {
     "name": "tinusg/verkoopmachine-statamic",
-    "description": "Display Verkoopmachine content in Statamic websites.",
+    "description": "Display livestock listings and cattle auctions from Verkoopmachine in Statamic websites.",
     "type": "statamic-addon",
+    "license": "MIT",
+    "keywords": [
+        "statamic",
+        "laravel",
+        "verkoopmachine",
+        "koemarkt",
+        "livestock",
+        "marketplace"
+    ],
+    "homepage": "https://github.com/tinusg/verkoopmachine-statamic",
+    "authors": [
+        {
+            "name": "tinusg",
+            "homepage": "https://github.com/tinusg",
+            "role": "Developer"
+        }
+    ],
+    "support": {
+        "issues": "https://github.com/tinusg/verkoopmachine-statamic/issues",
+        "source": "https://github.com/tinusg/verkoopmachine-statamic"
+    },
     "require": {
         "php": "^8.3",
         "statamic/cms": "^6.0"
@@ -22,7 +43,7 @@
     "extra": {
         "statamic": {
             "name": "Verkoopmachine",
-            "description": "Display Verkoopmachine content in Statamic websites."
+            "description": "Display livestock listings and cattle auctions from Verkoopmachine in Statamic websites."
         },
         "laravel": {
             "providers": [

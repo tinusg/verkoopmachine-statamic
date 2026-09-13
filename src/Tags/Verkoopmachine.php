@@ -13,7 +13,15 @@ class Verkoopmachine extends Tags
 
     public function styles(): string
     {
-        return '<link rel="stylesheet" href="'.e(asset('vendor/verkoopmachine-statamic/css/verkoopmachine.css')).'">';
+        $path = 'vendor/verkoopmachine-statamic/css/verkoopmachine.css';
+        $url = asset($path);
+        $publishedPath = public_path($path);
+
+        if (is_file($publishedPath)) {
+            $url .= '?v='.filemtime($publishedPath);
+        }
+
+        return '<link rel="stylesheet" href="'.e($url).'">';
     }
 
     /**
