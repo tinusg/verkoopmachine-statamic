@@ -2,7 +2,7 @@
 
 Toon actueel aanbod uit [Verkoopmachine](https://www.verkoopmachine.nl) in een
 Statamic-site. De add-on haalt de inhoud op aan de hand van één ingestelde
-**clientslug** en rendert die als een toegankelijk, gegroepeerd overzicht met
+**koppelcode** en rendert die als een toegankelijk, gegroepeerd overzicht met
 deeplinks naar [Koemarkt](https://www.koemarkt.nl).
 
 De eerste versie ondersteunt:
@@ -62,20 +62,21 @@ php artisan vendor:publish --tag=verkoopmachine-statamic --force
 ## Configuratie
 
 Open in het Statamic-control-panel de instellingen van de add-on en vul de
-**Client slug** in. Bijvoorbeeld:
+**Koppelcode** in. Je vindt deze in Verkoopmachine onder
+**Instellingen > Bedrijfsgegevens**. Bijvoorbeeld:
 
 ```text
 middelveld-machines
 ```
 
-De slug is de publieke identifier van de Verkoopmachine-client; het is niet de
-bedrijfsnaam. Bij het opslaan controleert de add-on via de API of de client
-bestaat.
+De koppelcode verbindt de Statamic-site met het juiste Verkoopmachine-bedrijf.
+Bij het opslaan controleert de add-on via de API of de koppelcode geldig is.
 
-- Bestaat de slug niet, dan wordt de instelling niet opgeslagen en verschijnt
-  de melding: `Deze client slug bestaat niet in Verkoopmachine.`
+- Bestaat de koppelcode niet, dan wordt de instelling niet opgeslagen en
+  verschijnt een melding dat de koppelcode ongeldig is.
 - Is de API tijdelijk onbereikbaar, dan wordt ook niet opgeslagen. De melding
-  maakt onderscheid tussen een onbekende slug en een niet-uitvoerbare controle.
+  maakt onderscheid tussen een onbekende koppelcode en een niet-uitvoerbare
+  controle.
 
 De instelling wordt door Statamic opgeslagen in:
 
@@ -83,14 +84,15 @@ De instelling wordt door Statamic opgeslagen in:
 resources/addons/verkoopmachine-statamic.yaml
 ```
 
-Een handmatig voorbeeld:
+Een handmatig voorbeeld (de technische configuratiesleutel blijft
+`client_slug`):
 
 ```yaml
 client_slug: middelveld-machines
 ```
 
-Gebruik bij voorkeur het control panel. Daarmee blijft de server-side
-slugvalidatie altijd actief.
+Gebruik bij voorkeur het control panel. Daarmee blijft de server-side validatie
+van de koppelcode altijd actief.
 
 ### Omgevingsvariabelen
 
@@ -250,8 +252,8 @@ rechtstreeks aan: een volgende `vendor:publish --force` overschrijft die.
 De add-on gebruikt de volgende read-only endpoints:
 
 ```text
-GET /api/v1/clients/{slug}
-GET /api/v1/clients/{slug}/content?types=vee,rundveeveilingen&limit=6&locale=nl
+GET /api/v1/clients/{koppelcode}
+GET /api/v1/clients/{koppelcode}/content?types=vee,rundveeveilingen&limit=6&locale=nl
 ```
 
 De eerste endpoint valideert de instelling. De tweede retourneert een client en
@@ -265,7 +267,7 @@ response.
 
 ## Caching en beschikbaarheid
 
-Elke unieke combinatie van clientslug, typen, limiet en taal wordt vijf minuten
+Elke unieke combinatie van koppelcode, typen, limiet en taal wordt vijf minuten
 gecached. Dat beperkt HTTP-verzoeken tijdens drukbezochte pagina's.
 
 Na een succesvolle response bewaart de add-on daarnaast een fallback-versie,
@@ -275,22 +277,23 @@ foutmelding op de pagina.
 
 ## Problemen oplossen
 
-### De slug wordt afgewezen
+### De koppelcode wordt afgewezen
 
-Controleer of de slug precies overeenkomt met de Verkoopmachine-client en of
-`VERKOOPMACHINE_API_URL` naar de juiste omgeving wijst. Test desgewenst:
+Controleer of de koppelcode precies overeenkomt met de code onder
+**Instellingen > Bedrijfsgegevens** en of `VERKOOPMACHINE_API_URL` naar de
+juiste omgeving wijst. Test desgewenst:
 
 ```bash
-curl -i "https://www.verkoopmachine.nl/api/v1/clients/jouw-client-slug"
+curl -i "https://www.verkoopmachine.nl/api/v1/clients/jouw-koppelcode"
 ```
 
-Een `404` betekent dat de slug niet bestaat of niet actief beschikbaar is.
+Een `404` betekent dat de koppelcode niet bestaat of niet actief beschikbaar is.
 
 ### Geen aanbod zichtbaar
 
 Controleer achtereenvolgens:
 
-1. Of de slug is opgeslagen in de add-oninstellingen.
+1. Of de koppelcode is opgeslagen in de add-oninstellingen.
 2. Of de client publiek zichtbare Vee-advertenties of toekomstige
    Rundveeveilingen heeft.
 3. Of de gewenste `types` niet zijn beperkt in de tag.
@@ -318,8 +321,9 @@ composer install
 vendor/bin/phpunit --do-not-cache-result
 ```
 
-De tests controleren onder andere de slugvalidatie, de API-aanroep en de
-fallback naar verouderde cache. Test daarnaast in de consumerende Statamic-site
+De tests controleren onder andere de validatie van de koppelcode, de API-aanroep
+en de fallback naar verouderde cache. Test daarnaast in de consumerende
+Statamic-site
 dat een pagina met `{{ verkoopmachine:overview }}` de verwachte inhoud en
 deeplinks rendert.
 
