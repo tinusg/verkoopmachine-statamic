@@ -29,9 +29,9 @@ class Verkoopmachine extends Tags
      */
     public function content(): array
     {
-        $slug = Addon::get('tinusg/verkoopmachine-statamic')->settings()->get('client_slug');
+        $clientCode = Addon::get('tinusg/verkoopmachine-statamic')->settings()->get('client_code');
 
-        if (! is_string($slug) || blank($slug)) {
+        if (! is_string($clientCode) || blank($clientCode)) {
             return $this->unavailable('Er is nog geen Verkoopmachine-client ingesteld.');
         }
 
@@ -39,7 +39,7 @@ class Verkoopmachine extends Tags
             return [
                 'available' => true,
                 'error' => null,
-                ...$this->api->content($slug, $this->types(), $this->limit(), 'nl'),
+                ...$this->api->content($clientCode, $this->types(), $this->limit(), 'nl'),
             ];
         } catch (\Throwable) {
             return $this->unavailable('De Verkoopmachine-inhoud is momenteel niet beschikbaar.');

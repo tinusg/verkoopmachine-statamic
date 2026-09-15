@@ -84,11 +84,11 @@ De instelling wordt door Statamic opgeslagen in:
 resources/addons/verkoopmachine-statamic.yaml
 ```
 
-Een handmatig voorbeeld (de technische configuratiesleutel blijft
-`client_slug`):
+Een handmatig voorbeeld (de technische configuratiesleutel is
+`client_code`):
 
 ```yaml
-client_slug: middelveld-machines
+client_code: middelveld-machines
 ```
 
 Gebruik bij voorkeur het control panel. Daarmee blijft de server-side validatie
@@ -104,12 +104,6 @@ VERKOOPMACHINE_CONNECT_TIMEOUT=3
 VERKOOPMACHINE_TIMEOUT=8
 VERKOOPMACHINE_CACHE_SECONDS=300
 VERKOOPMACHINE_STALE_CACHE_SECONDS=86400
-```
-
-Voor een lokale Verkoopmachine-installatie kan bijvoorbeeld dit worden gebruikt:
-
-```dotenv
-VERKOOPMACHINE_API_URL=https://www.verkoopmachine.test/api/v1
 ```
 
 Maak na een wijziging aan `.env` zo nodig de Laravel-configcache leeg:

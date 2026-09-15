@@ -24,7 +24,7 @@ class ServiceProvider extends AddonServiceProvider
                         [
                             'fields' => [
                                 [
-                                    'handle' => 'client_slug',
+                                    'handle' => 'client_code',
                                     'field' => [
                                         'type' => 'text',
                                         'display' => 'Koppelcode',

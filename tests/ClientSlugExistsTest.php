@@ -9,7 +9,7 @@ use Tinusg\VerkoopmachineStatamic\Rules\ClientSlugExists;
 
 class ClientSlugExistsTest extends TestCase
 {
-    public function test_it_rejects_an_unknown_client_slug(): void
+    public function test_it_rejects_an_unknown_client_code(): void
     {
         config()->set('verkoopmachine-statamic.api_url', 'https://verkoopmachine.test/api/v1');
 
@@ -19,13 +19,13 @@ class ClientSlugExistsTest extends TestCase
         ]);
 
         $validator = Validator::make([
-            'client_slug' => 'onbekend-bedrijf',
+            'client_code' => 'onbekend-bedrijf',
         ], [
-            'client_slug' => [new ClientSlugExists(app(VerkoopmachineApi::class))],
+            'client_code' => [new ClientSlugExists(app(VerkoopmachineApi::class))],
         ]);
 
         $this->assertFalse($validator->passes());
-        $this->assertSame('Deze Koppelcode bestaat niet in Verkoopmachine.', $validator->errors()->first('client_slug'));
+        $this->assertSame('Deze Koppelcode bestaat niet in Verkoopmachine.', $validator->errors()->first('client_code'));
     }
 
     public function test_it_reports_when_the_client_cannot_be_checked(): void
@@ -38,12 +38,12 @@ class ClientSlugExistsTest extends TestCase
         ]);
 
         $validator = Validator::make([
-            'client_slug' => 'veehandel-jansen',
+            'client_code' => 'veehandel-jansen',
         ], [
-            'client_slug' => [new ClientSlugExists(app(VerkoopmachineApi::class))],
+            'client_code' => [new ClientSlugExists(app(VerkoopmachineApi::class))],
         ]);
 
         $this->assertFalse($validator->passes());
-        $this->assertSame('De Koppelcode kon momenteel niet worden gecontroleerd.', $validator->errors()->first('client_slug'));
+        $this->assertSame('De Koppelcode kon momenteel niet worden gecontroleerd.', $validator->errors()->first('client_code'));
     }
 }
